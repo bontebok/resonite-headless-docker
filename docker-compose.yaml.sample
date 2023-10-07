@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  resonite:
+    hostname: headless
+    build:
+      context: ~/docker/resonite-headless-docker/resonite-headless
+      args:
+        - HOSTUSERID=${HOSTUSERID:-1000}
+        - HOSTGROUPID=${HOSTGROUPID:-1000}
+        - STEAMBETA=${STEAMBETA}
+        - STEAMBETAPASSWORD=${STEAMBETAPASSWORD}
+        - STEAMLOGIN=${STEAMLOGIN}
+        - RML=${RML:-false}
+        - PROCMON=${PROCMON:-false}
+    environment:
+      - AUTOUPDATE=${AUTOUPDATE:-true}
+      - CLEANASSETS=${CLEANASSETS:-false}
+      - CLEANLOGS=${CLEANLOGS:-false}
+    tty: true
+    stdin_open: true
+    networks:
+      - resonite
+    volumes:
+      - "./Config:/opt/resonite/Config"
+      - "./Logs:/opt/resonite/Logs"
+      - "./rml_mods:/opt/resonite/rml_mods"
+      - "./rml_config:/opt/resonite/rml_config"
+      - "/etc/localtime:/etc/localtime:ro"
+    restart: unless-stopped
+
+  monitor:
+    hostname: monitor
+    build:
+      context: ~/docker/resonite-headless-docker/headless-status
+      args:
+        - HOSTUSERID=${HOSTUSERID:-1000}
+        - HOSTGROUPID=${HOSTGROUPID:-1000}
+    tty: true
+    stdin_open: true
+    environment:
+      - PORT=${NODEREDPORT}
+    networks:
+      - resonite
+    volumes:
+      - node-red-data:/data
+      - "./Config:/Config"
+      - "./Logs:/Logs"
+      - "/etc/localtime:/etc/localtime:ro"
+    restart: unless-stopped
+
+volumes:
+  node-red-data:
+
+networks:
+  resonite:
+    enable_ipv6: true
+    driver: bridge
