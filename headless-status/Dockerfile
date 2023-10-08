@@ -42,6 +42,6 @@ COPY flows.json /data/flows.json
 RUN npm install --unsafe-perm --no-update-notifier --no-audit --no-fund --omit=dev
 
 # Expose the listening port of node-red
-EXPOSE 1880/tcp
+# EXPOSE 1880/tcp
 
 ENTRYPOINT ["npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
