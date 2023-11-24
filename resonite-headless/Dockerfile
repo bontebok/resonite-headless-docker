@@ -95,8 +95,10 @@ RUN	cp -R ${STEAMAPPDIR}/patches/. ${STEAMAPPDIR} && \
 	ln -sf /usr/lib/x86_64-linux-gnu/libopus.so.0 ${STEAMAPPDIR}/Resonite_Data/Plugins/libopus.so && \
 	ln -sf /usr/lib/x86_64-linux-gnu/libopus.so.0 ${STEAMAPPDIR}/Headless/libopus.so && \
 	ln -sf /lib/x86_64-linux-gnu/libdl.so.2 ${STEAMAPPDIR}/Headless/libdl.so && \
+	mkdir -p ${STEAMAPPDIR}/Headless/Config && \
 	ln -sf ${STEAMAPPDIR}/Config/Config.json ${STEAMAPPDIR}/Headless/Config && ln -s ${STEAMAPPDIR}/Logs ${STEAMAPPDIR}/Headless/Logs && \
 	ln -sf ${STEAMAPPDIR}/Resonite_Data/Plugins/libsteam_api.so ${STEAMAPPDIR}/Headless/libsteam_api64.so
+#	ln -sf ${STEAMAPPDIR}/RuntimeData ${STEAMAPPDIR}/Headless/.
 
 # ResoniteModLoader
 FROM build as rml-true
