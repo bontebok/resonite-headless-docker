@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   resonite:
     hostname: headless
@@ -53,5 +52,5 @@ volumes:
 
 networks:
   resonite:
-    enable_ipv6: true
+    enable_ipv6: false
     driver: bridge
